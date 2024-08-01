@@ -1,0 +1,41 @@
+import bpy
+
+# Vars
+OUTPUT_DIR = r"C:\Users\aech-\OneDrive\Desktop\mu"
+MATERIAL = bpy.data.materials[""]
+VALUE_NODE = MATERIAL.node_tree.nodes[""].outputs[0]
+VALUES = [0, 0., 0., 0.]
+scene_number = "1"
+file_names = [f"{pre_number}{char}{scene_number}" for char in "abcdefghij"]
+
+# Render settings
+bpy.context.scene.render.image_settings.file_format = 'WEBP'
+bpy.context.scene.render.image_settings.quality = 100
+
+
+
+# Loop through the values and render the images
+for value, file_name in zip(VALUES, file_names):
+    VALUE_NODE.default_value = value
+     
+    # Set the output path and render
+    bpy.context.scene.render.filepath = f"{OUTPUT_DIR}\\{file_name}"
+    bpy.ops.render.render(write_still=True)
+    
+# Reset node value
+VALUE_NODE.default_value = VALUES[0]
+
+print("Rendering completed.")
+
+
+
+
+
+
+# Define the material and the nested node groups and node
+#material_name = ""
+#group_name = ""
+#node_name = ""
+
+#for value, file_name in zip(values, file_names):
+#    material.node_tree.nodes[group_name].node_tree.nodes[node_name].outputs[0].default_value = value
